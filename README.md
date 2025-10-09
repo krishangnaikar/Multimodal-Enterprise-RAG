@@ -141,6 +141,9 @@ ollama pull nomic-embed-text
   - Per-user doc isolation; each user gets their own upload dir and vector collection.
   - **Why:** convenient local demo; swap for real auth/DB in production.
 
+<img width="1657" height="1069" alt="image" src="https://github.com/user-attachments/assets/86e69f13-1361-44de-94f6-02cbfc6e528f" />
+
+
 ---
 
 ## 🧭 Features
