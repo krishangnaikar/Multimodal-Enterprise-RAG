@@ -110,38 +110,64 @@ ollama pull nomic-embed-text
   - `mistral`: fast, strong general-purpose reasoning for query routing, answer synthesis.
   - `llava`: captions every uploaded image for better search and graph entities.
   - `nomic-embed-text`: 768-dim embeddings for Qdrant.
-  - **Why:** fully local, easy model management, no API keys, private by default.
+  - **Why:** Zero API keys, runs fully local (privacy), one-line model management (ollama pull …), good Windows/macOS support, simple HTTP API. Works with both text (Mistral) and vision (LLaVA) models.
+  - Alternatives:
+    - OpenAI/Anthropic APIs: great quality, but require internet, billable usage, and send data off-device.
+    - LM Studio / text-generation-webui: nice UIs; API/story varies, less turnkey for mixed text+vision.
+    - Raw llama.cpp: very fast, but you assemble model zoo & REST glue yourself.
 
 - **Qdrant** (Vector DB)
   - Persistent, production-ready ANN search with filters and cosine scoring.
   - Lives in Docker for easy start/stop and isolation.
-  - **Why:** great performance and persistence; you can restart the app without re-embedding.
+  - **Why:** Production-ready ANN with filters, persistent storage, easy Docker run, great Python client, cosine/IP support, snapshotting, payload filters.
+  - Alternatives:
+    - Weaviate: similar feature set; Qdrant is lighter to self-host and simpler operationally for a single node.
+    - FAISS: great library, but you handle persistence/sharding yourself.
+    - Pinecone/Cloud DBs: managed and scalable but cloud-only and billable.
 
 - **Streamlit** (UI)
   - Simple, reactive UI with login/register, file manager, per-user isolation, search form, and graph explorer.
-  - **Why:** minimal boilerplate, great for fast iteration, demos, and internal tools.
+  - **Why:** 10x faster to iterate than building a full frontend; live state, file uploads, forms, media, and layout with minimal code. Perfect for local tools.
+  - Alternatives:
+    - Gradio: fantastic for model demos; Streamlit is more flexible for multi-panel apps and stateful dashboards.
+    - Flask/FastAPI + React: maximum control, but more boilerplate and slower to iterate.
 
 - **NetworkX + PyVis** (Graph)
   - Extracted entities/relations are rendered interactively.
-  - **Why:** helps explore connections between people, projects, topics.
+  - **Why:** Ultra-simple in-memory graph with rich algorithms (NetworkX) and quick interactive visualization (PyVis) without hosting a separate DB.
+  - Alternatives:
+    - Neo4j/Memgraph: powerful graph databases with Cypher, but add infra + deployment overhead for this use case.
+    - Graphistry/Graphviz: great visualization, more ops/setup for interactive web embedding.
 
 - **Tesseract** (OCR) + **LLaVA** (image captions)
   - Tesseract extracts text when present; LLaVA captions images for anything OCR misses.
-  - **Why:** hybrid approach dramatically improves recall on slides, screenshots, photos.
+  - **Why:** Mature, cross-platform, offline OCR; trivially integrated via pytesseract.
+  - Alternatives:
+    - PaddleOCR/EasyOCR: competitive accuracy and languages; larger dependency surface and GPU expectations.
+    - Azure/AWS/GCP OCR: often higher accuracy, but not local and incurs costs.
 
 - **FFmpeg / imageio-ffmpeg** (Video)
   - Extracts audio for speech-to-text and frames for OCR when needed.
-  - **Why:** enables video ingestion with both transcript and on-screen text.
+  - **Why:** Rock-solid, ubiquitous media tool; imageio-ffmpeg ensures we can find a working binary reliably across systems.
+  - Alternatives:
+    - MoviePy/OpenCV-only: convenient but ultimately shell out to ffmpeg for many tasks; direct ffmpeg control = fewer edge cases.
 
-- **Faster-Whisper (via requirements)** (Audio/Video transcription)
+- **Faster-Whisper** (Audio/Video transcription)
   - Fast, accurate local transcription.
-  - **Why:** searchable speech and graph entities from audio/video.
+  - **Why:** Whisper-compatible, optimized inference, good accuracy/speed locally; predictable cost (zero), no data leaves the box.
+  - Alternatives:
+    - OpenAI Whisper API: high quality but cloud cost & privacy concerns.
+    - Vosk/DeepSpeech: lighter models; typically lower accuracy on varied domains.
 
 - **PBKDF2 (file-based login)** (Demo auth)
   - Per-user doc isolation; each user gets their own upload dir and vector collection.
-  - **Why:** convenient local demo; swap for real auth/DB in production.
+  - **Why:** Minimal dependencies, hashed passwords (PBKDF2-HMAC-SHA256), easy to audit, fits local/offline use. Each user gets isolated files and vector collections.
+  - Alternatives:
+    - bcrypt/argon2: stronger KDF choices; great upgrade if you plan to share the app.
+    - OAuth/OIDC + DB: the right move for production multi-user deployments (sessions, TLS, ACLs).
 
 <img width="1657" height="1069" alt="image" src="https://github.com/user-attachments/assets/86e69f13-1361-44de-94f6-02cbfc6e528f" />
+
 
 
 ---
