@@ -1,4 +1,5 @@
 # Graph-RAG (Ollama + Qdrant + Streamlit)
+This project is a modular Enterprise Retrieval-Augmented Generation (RAG) prototype that supports multi-modal ingestion (text, images, audio, video), generates a connected knowledge graph, and provides hybrid search capabilities using keyword and vector-based retrieval.
 
 A local, privacy-friendly multimodal RAG system with:
 - **Ollama** for on-device LLMs (e.g., Mistral) and vision (LLaVA)
