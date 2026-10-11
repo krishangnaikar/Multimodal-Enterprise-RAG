@@ -1,5 +1,9 @@
 
 def chunk_text(text, max_tokens = 800, overlap = 100):
+    if max_tokens <= 0:
+        raise ValueError("max_tokens must be greater than zero")
+    if overlap < 0 or overlap >= max_tokens:
+        raise ValueError("overlap must be non-negative and less than max_tokens")
     words = text.split()
     chunks = []
     i = 0
